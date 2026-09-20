@@ -1,0 +1,305 @@
+@font-face {
+  font-family: 'TheHook';
+  src: url('/fonts/thehook.regular.otf') format('opentype');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer utilities {
+  .font-thehook {
+    font-family: 'TheHook', sans-serif;
+    letter-spacing: 0.22em;
+  }
+
+  /* Frosted-glass card surface used throughout the app */
+  .glass {
+    @apply border border-border/50;
+    background: linear-gradient(
+      135deg,
+      hsl(var(--card) / 0.94) 0%,
+      hsl(var(--card) / 0.86) 55%,
+      hsl(var(--card) / 0.92) 100%
+    );
+    backdrop-filter: blur(24px) saturate(165%);
+    -webkit-backdrop-filter: blur(24px) saturate(165%);
+    box-shadow: none;
+  }
+
+  /* Same as .glass but drops the left border when butting up against another glass surface */
+  .glass-flush-left {
+    @apply border border-border/50 border-l-0;
+    background: linear-gradient(
+      135deg,
+      hsl(var(--card) / 0.94) 0%,
+      hsl(var(--card) / 0.86) 55%,
+      hsl(var(--card) / 0.92) 100%
+    );
+    backdrop-filter: blur(24px) saturate(165%);
+    -webkit-backdrop-filter: blur(24px) saturate(165%);
+    box-shadow: none;
+  }
+
+  .glass.no-border-top,
+  .glass-flush-left.no-border-top {
+    border-top-width: 0;
+  }
+
+  .glass.no-border-right,
+  .glass-flush-left.no-border-right {
+    border-right-width: 0;
+  }
+
+  .glass.no-border-bottom,
+  .glass-flush-left.no-border-bottom {
+    border-bottom-width: 0;
+  }
+
+  .glass.no-border-left,
+  .glass-flush-left.no-border-left {
+    border-left-width: 0;
+  }
+
+  .dark .glass,
+  .dark .glass-flush-left {
+    background: linear-gradient(
+      135deg,
+      hsl(var(--card) / 0.88) 0%,
+      hsl(var(--card) / 0.78) 55%,
+      hsl(var(--card) / 0.86) 100%
+    );
+    box-shadow: none;
+  }
+
+  /* Opaque variant for app chrome so translucency and backdrop sampling cannot shift its tone between themes */
+  .glass.glass-opaque,
+  .glass-flush-left.glass-opaque {
+    background: hsl(var(--card));
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
+  }
+
+  .app-canvas-glass {
+    position: relative;
+    overflow: hidden;
+  }
+
+  .app-canvas-glass > * {
+    position: relative;
+    z-index: 1;
+  }
+}
+
+@layer components {
+  .header-icon-btn {
+    @apply inline-flex items-center justify-center rounded-full transition-colors;
+    width: 1.75rem;
+    height: 1.75rem;
+    background-color: transparent;
+    color: hsl(var(--foreground) / 0.82);
+  }
+
+  .header-icon-btn:hover {
+    color: hsl(var(--foreground));
+    background-color: hsl(var(--muted) / 0.38);
+  }
+
+  .dark .header-icon-btn:hover {
+    background-color: hsl(var(--muted) / 0.42);
+  }
+
+  .header-icon-btn:active {
+    background-color: hsl(var(--muted) / 0.50);
+  }
+
+  .dark .header-icon-btn:active {
+    background-color: hsl(var(--muted) / 0.56);
+  }
+
+  /* Viewport whose native scrollbar is hidden in favour of the overlay component */
+  .scroll-host {
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+  }
+
+  .scroll-host::-webkit-scrollbar {
+    width: 0;
+    height: 0;
+    display: none;
+  }
+
+  .overlay-scroll-thumb {
+    width: 4px;
+    border-radius: 999px;
+    background: hsl(var(--primary) / 0.42);
+  }
+
+  .overlay-scroll-thumb:hover,
+  .overlay-scroll-thumb-active {
+    background: hsl(var(--primary) / 0.6);
+  }
+
+  .overlay-scroll-arrow {
+    height: 10px;
+    width: 10px;
+    background-color: transparent;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: 8px 8px;
+  }
+
+  .overlay-scroll-arrow-up {
+    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 12'><path d='M3 7.5 L6 4 L9 7.5' fill='none' stroke='%230ea5e9' stroke-width='1.6' stroke-linecap='round' stroke-linejoin='round'/></svg>");
+  }
+
+  .overlay-scroll-arrow-down {
+    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 12'><path d='M3 4.5 L6 8 L9 4.5' fill='none' stroke='%230ea5e9' stroke-width='1.6' stroke-linecap='round' stroke-linejoin='round'/></svg>");
+  }
+
+  .dark .overlay-scroll-arrow-up {
+    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 12'><path d='M3 7.5 L6 4 L9 7.5' fill='none' stroke='%2338bdf8' stroke-width='1.6' stroke-linecap='round' stroke-linejoin='round'/></svg>");
+  }
+
+  .dark .overlay-scroll-arrow-down {
+    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 12'><path d='M3 4.5 L6 8 L9 4.5' fill='none' stroke='%2338bdf8' stroke-width='1.6' stroke-linecap='round' stroke-linejoin='round'/></svg>");
+  }
+}
+
+@layer base {
+  /* Light theme tokens */
+  :root {
+    --background: 220 30% 99%;
+    --foreground: 222.2 95% 4.9%;
+    --card: 220 16% 92%;
+    --card-foreground: 222.2 84% 4.9%;
+    --popover: 220 14% 91%;
+    --popover-foreground: 222.2 84% 4.9%;
+    --primary: 199 89% 48%;
+    --primary-foreground: 210 40% 98%;
+    --secondary: 220 12% 88%;
+    --secondary-foreground: 222.2 47.4% 11.2%;
+    --muted: 220 12% 88%;
+    --muted-foreground: 215 18% 38%;
+    --accent: 204 55% 86%;
+    --accent-foreground: 222.2 47.4% 11.2%;
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 210 40% 98%;
+    --border: 220 12% 74%;
+    --input: 220 12% 74%;
+    --ring: 199 89% 52%;
+    --radius: 0.5rem;
+    --field: var(--background);
+    --field-foreground: var(--foreground);
+    --field-border: var(--border);
+  }
+
+  /* Dark theme tokens */
+  .dark {
+    --background: 222 47% 7%;
+    --foreground: 210 40% 98%;
+    --card: 222 47% 9%;
+    --card-foreground: 210 40% 98%;
+    --popover: 222 47% 9%;
+    --popover-foreground: 210 40% 98%;
+    --primary: 199 89% 55%;
+    --primary-foreground: 222.2 47.4% 11.2%;
+    --secondary: 217.2 32.6% 16%;
+    --secondary-foreground: 210 40% 98%;
+    --muted: 217.2 32.6% 16%;
+    --muted-foreground: 215 20.2% 70%;
+    --accent: 217.2 32.6% 16%;
+    --accent-foreground: 210 40% 98%;
+    --destructive: 0 62.8% 30.6%;
+    --destructive-foreground: 210 40% 98%;
+    --border: 214 28% 20%;
+    --input: 214 28% 20%;
+    --ring: 199 89% 55%;
+    --field: var(--background);
+    --field-foreground: var(--foreground);
+    --field-border: var(--border);
+  }
+
+  * {
+    @apply border-border/50;
+  }
+
+  body {
+    @apply text-foreground font-sans;
+    background-color: hsl(var(--background));
+    /* Faint sky glows in opposite corners so empty areas read less flat */
+    background-image:
+      radial-gradient(1100px 600px at 12% -5%, hsl(var(--primary) / 0.06), transparent 60%),
+      radial-gradient(1000px 700px at 105% 110%, hsl(var(--primary) / 0.05), transparent 60%);
+  }
+
+  .dark body {
+    background-image:
+      radial-gradient(1100px 600px at 12% -5%, hsl(var(--primary) / 0.06), transparent 60%),
+      radial-gradient(1000px 700px at 105% 110%, hsl(var(--primary) / 0.05), transparent 60%);
+  }
+}
+
+html,
+body {
+  height: 100%;
+}
+
+/* Mobile drops the glass blur since backdrop-filter compositing halos borders and samples scrolling content on mobile GPUs */
+@media (max-width: 767px) {
+  .glass,
+  .glass-flush-left {
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
+  }
+}
+
+/* Seam lines drawn in the soft border tone premixed opaque so scrolled content never tints them */
+.hairline-t,
+.hairline-b,
+.hairline-r {
+  position: relative;
+  z-index: 2;
+}
+
+.hairline-t::before,
+.hairline-b::after,
+.hairline-r::after {
+  content: '';
+  position: absolute;
+  background: color-mix(in srgb, hsl(var(--border)) 50%, hsl(var(--card)));
+  pointer-events: none;
+  z-index: 5;
+  transform: translateZ(0);
+}
+
+.hairline-t::before {
+  top: var(--seam-shift, 0px);
+  left: 0;
+  right: 0;
+  height: calc(max(1px, round(down, 1px * var(--dpr, 1), 1px)) / var(--dpr, 1));
+}
+
+.hairline-b::after {
+  bottom: var(--seam-shift, 0px);
+  left: 0;
+  right: 0;
+  height: calc(max(1px, round(down, 1px * var(--dpr, 1), 1px)) / var(--dpr, 1));
+}
+
+.hairline-r::after {
+  top: 0;
+  bottom: 0;
+  right: 0;
+  width: calc(max(1px, round(down, 1px * var(--dpr, 1), 1px)) / var(--dpr, 1));
+}
+
+/* Full width mobile layouts have no adjacent panel so the vertical seam is dropped */
+@media (max-width: 767px) {
+  .hairline-r::after {
+    display: none;
+  }
+}
